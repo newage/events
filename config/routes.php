@@ -33,15 +33,15 @@ use Psr\Container\ContainerInterface;
  * );
  */
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
-    $app->get('/', Event\Handler\HomePageHandler::class, 'home');
-    $app->get('/api/ping', Event\Handler\PingHandler::class, 'api.ping');
-    $app->get('/metrics[/]', Event\Handler\MetricsHandler::class, 'metrics');
+    $app->get('/', Event\App\Handler\HomePageHandler::class, 'home');
+    $app->get('/api/ping', Event\App\Handler\PingHandler::class, 'api.ping');
+    $app->get('/metrics[/]', Event\App\Handler\MetricsHandler::class, 'metrics');
 //    $app->get('/tasks[/]', Event\Handler\MetricsHandler::class, 'tasks');
     $app->post(
         '/task[/]',
         [
             Mezzio\Helper\BodyParams\BodyParamsMiddleware::class,
-            Event\Handler\PostTaskHandler::class
+            Event\App\Handler\PostTaskHandler::class
         ],
         'post.task'
     );

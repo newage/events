@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Common\Container;
+namespace Event\Common\Container;
 
 class Config implements ConfigInterface
 {

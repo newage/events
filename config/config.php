@@ -30,9 +30,9 @@ $aggregator = new ConfigAggregator([
         ? \Mezzio\Swoole\ConfigProvider::class
         : function(){ return[]; },
 
-    // Default App module config
-    Event\ConfigProvider::class,
-    Common\ConfigProvider::class,
+    // Default module configs
+    Event\App\ConfigProvider::class,
+    Event\Common\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):

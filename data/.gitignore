@@ -6,3 +6,5 @@
 !schema.sql
 !request/
 !mysql/
+!keys/
+!keys/.gitkeep

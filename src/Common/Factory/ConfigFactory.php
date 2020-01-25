@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Factory;
+namespace Event\Common\Factory;
 
-use Common\Container\Config;
+use Event\Common\Container\Config;
 use Psr\Container\ContainerInterface;
 
 class ConfigFactory

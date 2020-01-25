@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Event\Factory;
+namespace Event\App\Factory;
 
-use Event\Handler\HomePageHandler;
+use Event\App\Handler\HomePageHandler;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Container\ContainerInterface;

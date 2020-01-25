@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Container;
+namespace Event\Common\Container;
 
 class Version
 {

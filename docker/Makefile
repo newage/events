@@ -34,3 +34,9 @@ start: ## Start existing containers
 
 console: ## Connect to container
 	docker exec -it --user www-data events_php bash
+
+dev: ## Enable development mode. MODE enable/disable/status
+	docker exec -it --user www-data events_php composer development-${MODE}
+
+mezzio: ## Run CLI command. example: make mezzio COMMAND="--help"
+	docker exec -it --user www-data events_php composer mezzio ${COMMAND}

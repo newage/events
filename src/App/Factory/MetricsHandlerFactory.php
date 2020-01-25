@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Event\Factory;
+namespace Event\App\Factory;
 
-use Common\Container\ConfigInterface;
+use Event\Common\Container\ConfigInterface;
 use Interop\Container\ContainerInterface;
-use Event\Handler\MetricsHandler;
+use Event\App\Handler\MetricsHandler;
 
 class MetricsHandlerFactory
 {

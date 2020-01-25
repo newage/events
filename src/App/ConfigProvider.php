@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Event;
+namespace Event\App;
 
 /**
  * The configuration provider for the App module
