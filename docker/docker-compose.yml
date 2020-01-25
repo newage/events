@@ -44,6 +44,8 @@ services:
         volumes:
             - ./php/conf/php.ini:/usr/local/etc/php/conf.d/custom.ini
             - ../:/var/www/html
+        environment:
+            XDEBUG_CONFIG: remote_host=dockerhost
 
 networks:
     default:

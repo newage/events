@@ -5,6 +5,6 @@ Authorization1: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU4YWJhZDNkN
 X-Client-Id: 1jci471zjf3wjzb3jb26j
 Cookie: XDEBUG_SESSION=PHPSTORM;
 
-{"data":34}
+{"name": "point", "description": "A game point"}
 
 ###

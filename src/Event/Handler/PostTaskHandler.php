@@ -13,6 +13,7 @@ class PostTaskHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $body = $request->getParsedBody();
+        die('ok');
         var_dump($body);
     }
 
