@@ -16,8 +16,9 @@ build: ## Build project
 	docker-compose build
 
 init: ## Init project. Install composer
-	docker exec -it events_php composer install
+	docker exec -it --user www-data events_php composer install
 	cp ../.env.example ../.env
+	mysql -h172.31.0.11 -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < mysql/schema.sql
 
 up: ## Start docker containers
 	docker-compose up -d
@@ -32,4 +33,4 @@ start: ## Start existing containers
 	docker-compose start
 
 console: ## Connect to container
-	docker exec -it events_php bash
+	docker exec -it --user www-data events_php bash

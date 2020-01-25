@@ -10,10 +10,10 @@ services:
             - /data/mysql:/var/lib/mysql
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: docker
-            MYSQL_PASSWORD: docker
-            MYSQL_DATABASE: docker
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+            MYSQL_USER: ${MYSQL_USER:-docker}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD:-docker}
+            MYSQL_DATABASE: ${MYSQL_DATABASE:-docker}
         networks:
             default:
                 ipv4_address: 172.31.0.11
@@ -33,7 +33,7 @@ services:
         build:
             context: ./php
             args:
-                - PROJECT_PATH=${PROJECT_PATH:-/var/www/events}
+                - PROJECT_PATH=${PROJECT_PATH:-/var/www/html}
                 - INSTALL_XDEBUG=${DEV_MODE:-true}
                 - PUID=${PUID:-1001}
         expose:
@@ -41,7 +41,6 @@ services:
         restart: always
         extra_hosts:
             - "dockerhost:${DOCKER_HOST_IP}"
-            - "${SERVER_NAME_BASE}:${DOCKER_HOST_IP}"
         volumes:
             - ./php/conf/php.ini:/usr/local/etc/php/conf.d/custom.ini
             - ../:/var/www/html

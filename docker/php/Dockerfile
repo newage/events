@@ -26,5 +26,14 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
 ;fi
 COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
-RUN usermod -u ${PUID} www-data
+ARG PUID=
+RUN usermod -u ${PUID} www-data \
+    && groupmod -g ${PUID} www-data \
+    && mkdir -p ${COMPOSER_CACHE_DIR} \
+    && chown www-data:www-data ${COMPOSER_CACHE_DIR} \
+    && sed -i "s/sudo:x:27:/sudo:x:27:www-data/" /etc/group \
+    && echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+VOLUME ${COMPOSER_CACHE_DIR}
+ARG PROJECT_PATH=
+WORKDIR ${PROJECT_PATH}
 USER www-data

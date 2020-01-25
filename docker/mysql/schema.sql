@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `entity_properties` (
   `dt_created` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_entity_idx` (`entity_id` ASC),
-  CONSTRAINT `fk_entity`
+  CONSTRAINT `fk_entity_entity`
     FOREIGN KEY (`entity_id`)
     REFERENCES `entities` (`id`)
     ON DELETE CASCADE
@@ -81,10 +81,10 @@ CREATE TABLE IF NOT EXISTS `events_log` (
   `entity_id` INT UNSIGNED NOT NULL,
   `external_id` INT UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_entity_idx` (`entity_id` ASC),
-  INDEX `fk_entity_property_idx` (`property_id` ASC),
+  INDEX `fk_event_entity_idx` (`entity_id` ASC),
+  INDEX `fk_event_entity_property_idx` (`property_id` ASC),
   INDEX `search_idx` (`entity_id` ASC, `user_id` ASC, `external_id` ASC),
-  CONSTRAINT `fk_entity`
+  CONSTRAINT `fk_event_entity`
     FOREIGN KEY (`entity_id`)
     REFERENCES `entities` (`id`)
     ON DELETE CASCADE
