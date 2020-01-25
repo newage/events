@@ -1,0 +1,10 @@
+POST http://{{host}}/task
+Accept: application/json
+Content-Type: application/vnd.api+json
+Authorization1: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU4YWJhZDNkNjBlYTE2Zjk2NDNhMDg4ZDUyYTZjYzQwIn0.eyJqdGkiOiI1OGFiYWQzZDYwZWExNmY5NjQzYTA4OGQ1MmE2Y2M0MCIsImlhdCI6MTU0NTA1MjUwMCwidWlkIjoyLCJyb2xlIjoiYWRtaW4ifQ.oDwpwjHVcn8pqeaMPf7S8FfyHgicKSV2v8dBJ2wBUTRDIkUaiUre3VclAM_ZNY7LCPzF35n6ACn_JPRa2eCAIKKKKyM3tqw4W2acX-zQMEZIHBCvt3CeYkGV8a44U-GOcu5Za1PhMwPtF9El1UjLmeiyTFf4_qHtnNDuoYmevXk
+X-Client-Id: 1jci471zjf3wjzb3jb26j
+Cookie: XDEBUG_SESSION=PHPSTORM;
+
+{"data":34}
+
+###

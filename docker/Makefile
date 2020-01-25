@@ -32,4 +32,4 @@ start: ## Start existing containers
 	docker-compose start
 
 console: ## Connect to container
-	docker exec -it lexiko_php bash
+	docker exec -it events_php bash

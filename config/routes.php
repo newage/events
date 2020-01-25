@@ -37,5 +37,12 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/api/ping', Event\Handler\PingHandler::class, 'api.ping');
     $app->get('/metrics[/]', Event\Handler\MetricsHandler::class, 'metrics');
 //    $app->get('/tasks[/]', Event\Handler\MetricsHandler::class, 'tasks');
-    $app->post('/task[/]', Event\Handler\MetricsHandler::class, 'post.task');
+    $app->post(
+        '/task[/]',
+        [
+            Mezzio\Helper\BodyParams\BodyParamsMiddleware::class,
+            Event\Handler\PostTaskHandler::class
+        ],
+        'post.task'
+    );
 };

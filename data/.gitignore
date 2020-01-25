@@ -4,3 +4,5 @@
 !.gitignore
 !model.mwb
 !schema.sql
+!request/
+!mysql/

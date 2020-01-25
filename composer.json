@@ -40,6 +40,7 @@
         "php": "^7.3",
         "laminas/laminas-component-installer": "^2.1.1",
         "laminas/laminas-config-aggregator": "^1.0",
+        "laminas/laminas-db": "^2.11",
         "laminas/laminas-diactoros": "^1.7.1 || ^2.0",
         "laminas/laminas-diagnostics": "^1.6",
         "laminas/laminas-servicemanager": "^3.3",

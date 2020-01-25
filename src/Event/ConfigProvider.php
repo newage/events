@@ -6,7 +6,6 @@ namespace Event;
 
 /**
  * The configuration provider for the App module
- *
  * @see https://docs.laminas.dev/laminas-component-installer/
  */
 class ConfigProvider
@@ -34,6 +33,7 @@ class ConfigProvider
         return [
             'invokables' => [
                 Handler\PingHandler::class => Handler\PingHandler::class,
+                Handler\PostTaskHandler::class => Handler\PostTaskHandler::class,
             ],
             'factories'  => [
                 Handler\HomePageHandler::class => Factory\HomePageHandlerFactory::class,

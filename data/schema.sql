@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `tasks_log` (
   PRIMARY KEY (`id`),
   INDEX `fk_tasks_idx` (`task_id` ASC),
   INDEX `fk_entities_idx` (`entity_id` ASC),
-  INDEX `search_idx` (`user_id` ASC, `entity_id` ASC, `external_id` ASC),
+  INDEX `search_idx` (`entity_id` ASC, `user_id` ASC, `external_id` ASC),
   CONSTRAINT `fk_tasks`
     FOREIGN KEY (`task_id`)
     REFERENCES `tasks` (`id`)
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `events_log` (
   PRIMARY KEY (`id`),
   INDEX `fk_entity_idx` (`entity_id` ASC),
   INDEX `fk_entity_property_idx` (`property_id` ASC),
-  INDEX `search_idx` (`user_id` ASC, `entity_id` ASC, `external_id` ASC),
+  INDEX `search_idx` (`entity_id` ASC, `user_id` ASC, `external_id` ASC),
   CONSTRAINT `fk_entity`
     FOREIGN KEY (`entity_id`)
     REFERENCES `entities` (`id`)

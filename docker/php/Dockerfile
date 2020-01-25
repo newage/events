@@ -1,5 +1,7 @@
 FROM php:7.3-fpm
 
+ENV COMPOSER_CACHE_DIR=/var/www/.composer-cache
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
            libcurl4-openssl-dev \
@@ -24,6 +26,5 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
 ;fi
 COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
-ARG PUID=1000
 RUN usermod -u ${PUID} www-data
 USER www-data

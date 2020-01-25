@@ -2,6 +2,6 @@
 /coveralls-upload.json
 /phpunit.xml
 /vendor/
-.env
-composer.phar
-.idea
+/.env
+/composer.phar
+/.idea
