@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Event\App\Factory;
 
 use Event\Common\Container\ConfigInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Event\App\Handler\MetricsHandler;
 
 class MetricsHandlerFactory

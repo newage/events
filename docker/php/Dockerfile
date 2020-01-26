@@ -10,6 +10,7 @@ RUN apt-get update \
    && docker-php-ext-install -j$(nproc) json mbstring \
    && docker-php-ext-install -j$(nproc) curl \
    && docker-php-ext-install -j$(nproc) zip \
+   && docker-php-ext-install -j$(nproc) pdo pdo_mysql \
    && rm -rf /var/lib/apt/lists/*
 
 # Composer

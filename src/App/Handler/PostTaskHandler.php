@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Event\App\Handler;
 
+use Event\App\Entity\Task;
+use Event\App\Mapper\TaskMapperInterface;
 use Event\Common\Container\Identity;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -11,11 +13,29 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class PostTaskHandler implements RequestHandlerInterface
 {
+    /**
+     * @var TaskMapperInterface
+     */
+    protected $mapper;
+
+    /**
+     * PostTaskHandler constructor.
+     * @param TaskMapperInterface $mapper
+     */
+    public function __construct(TaskMapperInterface $mapper)
+    {
+        $this->mapper = $mapper;
+    }
+
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $body = $request->getParsedBody();
         $identity = $request->getAttribute(Identity::class);
-        var_dump($body, $identity);
+        $entity = (new Task)
+            ->setName($body['name'])
+            ->setDescription($body['description']);
+        $createdEntity = $this->mapper->create($entity);
+        var_dump($createdEntity);
     }
 
 }
