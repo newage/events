@@ -40,6 +40,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->post(
         '/task[/]',
         [
+            Event\Common\Middleware\AuthorizationMiddleware::class,
             Mezzio\Helper\BodyParams\BodyParamsMiddleware::class,
             Event\App\Handler\PostTaskHandler::class
         ],

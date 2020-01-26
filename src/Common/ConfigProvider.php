@@ -32,9 +32,11 @@ class ConfigProvider
     {
         return [
             'invokables' => [
+
             ],
             'factories'  => [
                 Container\ConfigInterface::class => Factory\ConfigFactory::class,
+                Middleware\AuthorizationMiddleware::class => Factory\AuthorizationMiddlewareFactory::class,
             ],
         ];
     }
