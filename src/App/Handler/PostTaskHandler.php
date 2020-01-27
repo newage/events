@@ -6,7 +6,7 @@ namespace Event\App\Handler;
 
 use Event\App\Entity\Task;
 use Event\App\Mapper\TaskMapperInterface;
-use Event\Common\Container\Identity;
+use Laminas\Diactoros\Response\EmptyResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -30,12 +30,12 @@ class PostTaskHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $body = $request->getParsedBody();
-        $identity = $request->getAttribute(Identity::class);
+//        $identity = $request->getAttribute(Identity::class);
         $entity = (new Task)
             ->setName($body['name'])
             ->setDescription($body['description']);
-        $createdEntity = $this->mapper->create($entity);
-        var_dump($createdEntity);
+        $this->mapper->create($entity);
+        return new EmptyResponse();
     }
 
 }

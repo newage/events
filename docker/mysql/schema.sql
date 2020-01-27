@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `description` VARCHAR(255) NULL DEFAULT NULL,
   `dt_created` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_idx` (`name` ASC))
+  UNIQUE INDEX `t_name_idx` (`name` ASC))
 ENGINE = InnoDB;
 
 
@@ -17,10 +17,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `entities` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(15) NULL,
-  `description` VARCHAR(255) NULL,
+  `owner_id` INT UNSIGNED NOT NULL,
+  `external_id` INT UNSIGNED NOT NULL,
   `dt_created` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_idx` (`name` ASC))
+  UNIQUE INDEX `e_name_idx` (`name` ASC))
 ENGINE = InnoDB;
 
 
@@ -32,21 +33,20 @@ CREATE TABLE IF NOT EXISTS `tasks_log` (
   `task_id` INT UNSIGNED NOT NULL,
   `user_id` INT UNSIGNED NOT NULL,
   `entity_id` INT UNSIGNED NOT NULL,
-  `external_id` INT UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_tasks_idx` (`task_id` ASC),
-  INDEX `fk_entities_idx` (`entity_id` ASC),
-  INDEX `search_idx` (`entity_id` ASC, `user_id` ASC, `external_id` ASC),
-  CONSTRAINT `fk_tasks`
+  INDEX `fk_tl_tasks_idx` (`task_id` ASC),
+  INDEX `fk_tl_entities_idx` (`entity_id` ASC),
+  INDEX `tl_search_idx` (`user_id` ASC, `entity_id` ASC),
+  CONSTRAINT `fk_tl_tasks`
     FOREIGN KEY (`task_id`)
-    REFERENCES `tasks` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_entities`
+        REFERENCES `tasks` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+  CONSTRAINT `fk_tl_entities`
     FOREIGN KEY (`entity_id`)
-    REFERENCES `entities` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+        REFERENCES `entities` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -58,16 +58,23 @@ CREATE TABLE IF NOT EXISTS `entity_properties` (
   `entity_id` INT UNSIGNED NOT NULL,
   `property_name` VARCHAR(20) NULL,
   `property_value` VARCHAR(45) NULL,
-  `condition_tasks_sum` INT NOT NULL,
+  `task_id` INT UNSIGNED NOT NULL,
+  `tasks_sum` INT NOT NULL,
   `description` VARCHAR(255) NULL,
   `dt_created` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  INDEX `fk_entity_idx` (`entity_id` ASC),
-  CONSTRAINT `fk_entity_entity`
+  INDEX `fk_ep_entity_idx` (`entity_id` ASC),
+  INDEX `fk_ep_tasks_idx` (`task_id` ASC),
+  CONSTRAINT `fk_ep_entity`
     FOREIGN KEY (`entity_id`)
-    REFERENCES `entities` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+        REFERENCES `entities` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+  CONSTRAINT `fk_ep_tasks`
+    FOREIGN KEY (`task_id`)
+        REFERENCES `tasks` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -79,19 +86,18 @@ CREATE TABLE IF NOT EXISTS `events_log` (
   `property_id` INT UNSIGNED NOT NULL,
   `user_id` INT UNSIGNED NOT NULL,
   `entity_id` INT UNSIGNED NOT NULL,
-  `external_id` INT UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_event_entity_idx` (`entity_id` ASC),
-  INDEX `fk_event_entity_property_idx` (`property_id` ASC),
-  INDEX `search_idx` (`entity_id` ASC, `user_id` ASC, `external_id` ASC),
-  CONSTRAINT `fk_event_entity`
-    FOREIGN KEY (`entity_id`)
-    REFERENCES `entities` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_entity_property`
-    FOREIGN KEY (`property_id`)
-    REFERENCES `entity_properties` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+  INDEX `fk_el_entity_idx` (`entity_id` ASC),
+  INDEX `fk_el_entity_property_idx` (`property_id` ASC),
+  INDEX `el_search_idx` (`user_id` ASC, `entity_id` ASC),
+  CONSTRAINT `fk_el_entity`
+     FOREIGN KEY (`entity_id`)
+         REFERENCES `entities` (`id`)
+         ON DELETE CASCADE
+         ON UPDATE CASCADE,
+  CONSTRAINT `fk_el_entity_property`
+     FOREIGN KEY (`property_id`)
+         REFERENCES `entity_properties` (`id`)
+         ON DELETE CASCADE
+         ON UPDATE CASCADE)
 ENGINE = InnoDB;

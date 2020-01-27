@@ -32,7 +32,7 @@ class PdoTasksMapper implements TaskMapperInterface
             return null;
         }
 
-        $post = $select->fetch();
+        $post = $select->fetch(\PDO::FETCH_ASSOC);
         return $post ? $hydrator->hydrate((array) $post, new Task()) : null;
     }
 

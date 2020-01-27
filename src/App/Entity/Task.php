@@ -11,22 +11,12 @@ final class Task
     private $description;
     private $dtCreated;
 
-    public function __construct(
-        $id = null,
-        $name = null,
-        $description = null
-    ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->description = $description;
-    }
-
     /**
      * @return mixed
      */
     public function getId(): ?int
     {
-        return (int)$this->id;
+        return !empty($this->id) ? (int)$this->id : null;
     }
 
     /**
@@ -35,9 +25,8 @@ final class Task
      */
     public function setId($id): self
     {
-        $cloneObject = clone $this;
-        $cloneObject->id = $id;
-        return $cloneObject;
+        $this->id = $id;
+        return $this;
     }
 
     /**
@@ -54,9 +43,8 @@ final class Task
      */
     public function setName($name): self
     {
-        $cloneObject = clone $this;
-        $cloneObject->name = $name;
-        return $cloneObject;
+        $this->name = $name;
+        return $this;
     }
 
     /**
@@ -73,9 +61,8 @@ final class Task
      */
     public function setDescription($description): self
     {
-        $cloneObject = clone $this;
-        $cloneObject->description = $description;
-        return $cloneObject;
+        $this->description = $description;
+        return $this;
     }
 
     /**
@@ -92,8 +79,7 @@ final class Task
      */
     public function setDtCreated($dtCreated): self
     {
-        $cloneObject = clone $this;
-        $cloneObject->dtCreated = $dtCreated;
-        return $cloneObject;
+        $this->dtCreated = $dtCreated;
+        return $this;
     }
 }

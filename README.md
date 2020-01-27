@@ -22,10 +22,16 @@ Up containers
 $ docker> make up
 ```
 
-Install dependencies and create tables in MySQL
+Install dependencies
 
 ```bash
 $ docker> make init
+```
+
+Create tables in MySQL
+
+```bash
+$ docker> make init-db
 ```
 
 See in browser http://events
