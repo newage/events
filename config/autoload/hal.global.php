@@ -17,8 +17,8 @@ return [
         [
             '__class__' => RouteBasedCollectionMetadata::class,
             'collection_class' =>Entity\TaskCollection::class,
-            'collection_relation' => 'get.tasks',
-            'route' => 'tasks',
+            'collection_relation' => 'get.task',
+            'route' => 'get.tasks',
         ],
     ],
 ];

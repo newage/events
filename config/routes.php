@@ -37,6 +37,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/api/ping', Event\App\Handler\PingHandler::class, 'api.ping');
     $app->get('/metrics[/]', Event\App\Handler\MetricsHandler::class, 'metrics');
     $app->get('/task/{id}[/]', Event\App\Handler\GetTaskHandler::class, 'get.task');
+    $app->get('/tasks[/]', Event\App\Handler\GetTasksHandler::class, 'get.tasks');
     $app->post(
         '/task[/]',
         [

@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Event\App\Mapper;
 
 use Event\App\Entity\Task;
+use Event\App\Entity\TaskCollection;
+use Event\Common\Exception\NotFoundException;
 use Laminas\Hydrator\ClassMethodsHydrator;
+use Laminas\Paginator\Adapter\ArrayAdapter;
 
 class PdoTasksMapper implements TaskMapperInterface
 {
@@ -34,6 +37,22 @@ class PdoTasksMapper implements TaskMapperInterface
 
         $post = $select->fetch(\PDO::FETCH_ASSOC);
         return $post ? $hydrator->hydrate((array) $post, new Task()) : null;
+    }
+
+    public function fetchAll(): TaskCollection
+    {
+        $hydrator = new ClassMethodsHydrator();
+        $select = $this->pdo->prepare('SELECT * from tasks');
+        if (!$select->execute()) {
+            throw new NotFoundException('Wrong execution!');
+        }
+
+        $posts = [];
+        foreach ($select->fetchAll(\PDO::FETCH_ASSOC) as $row) {
+            $posts[] = $hydrator->hydrate((array) $row, new Task());
+        }
+        $collection = new TaskCollection(new ArrayAdapter($posts));
+        return $collection;
     }
 
     public function create(Task $entity): ?Task

@@ -40,6 +40,7 @@ class ConfigProvider
                 Mapper\TaskMapperInterface::class => Factory\PdoTasksMapperFactory::class,
                 Handler\PostTaskHandler::class => Factory\PostTaskHandlerFactory::class,
                 Handler\GetTaskHandler::class => Factory\GetTaskHandlerFactory::class,
+                Handler\GetTasksHandler::class => Factory\GetTasksHandlerFactory::class,
             ],
         ];
     }
