@@ -41,18 +41,6 @@ class TaskException extends \RuntimeException implements ProblemDetailsException
         return $e;
     }
 
-    public static function wrongId() : self
-    {
-        $e = new self();
-        $e->status = StatusCodeInterface::STATUS_BAD_REQUEST;
-        $e->type   = self::TYPE;
-        $e->title  = 'Bad request';
-        $e->detail = 'Wrong ID parameter in request';
-        $e->additional = [];
-
-        return $e;
-    }
-
     public static function notFound() : self
     {
         $e = new self();

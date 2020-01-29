@@ -38,8 +38,8 @@ class GetTaskHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $id = $request->getAttribute('id');
-        $task = $this->mapper->fetch((int) $id);
+        $id = (int) $request->getAttribute('id');
+        $task = $this->mapper->fetch($id);
         if (!$task) {
             throw TaskException::notFound();
         }

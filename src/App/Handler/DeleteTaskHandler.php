@@ -23,13 +23,10 @@ class DeleteTaskHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $id = $request->getAttribute('id');
-        if (!is_numeric($id)) {
-            throw TaskException::wrongId();
-        }
+        $id = (int) $request->getAttribute('id');
 
         try {
-            if (!$this->mapper->delete((int)$id)) {
+            if (!$this->mapper->delete($id)) {
                 throw TaskException::notDelete();
             }
         } catch (\PDOException $err) {
