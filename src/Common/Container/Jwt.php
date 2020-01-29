@@ -51,15 +51,15 @@ class Jwt implements JwtReaderInterface
         $token = (new Parser())->parse((string) $token);
 
         if (!$token instanceof Token) {
-            throw new InvalidTokenException('JWT can not be parsed.');
+            throw InvalidTokenException::notParsed();
         }
 
         if ($data instanceof ValidationData && !$this->validate($token, $data)) {
-            throw new InvalidTokenException('JWT is not valid.');
+            throw InvalidTokenException::notValid();
         }
 
         if (!$this->verify($token)) {
-            throw new InvalidTokenException('JWT is wrong.');
+            throw InvalidTokenException::notVerified();
         }
 
         return $token;

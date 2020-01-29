@@ -12,7 +12,6 @@ class PostTaskHandlerFactory
 {
     public function __invoke(ContainerInterface $container): PostTaskHandler
     {
-        $mapper = $container->get(TaskMapperInterface::class);
-        return new PostTaskHandler($mapper);
+        return new PostTaskHandler($container->get(TaskMapperInterface::class));
     }
 }

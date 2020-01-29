@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Event\App\Handler;
 
 use Event\App\Entity\Task;
+use Event\App\Exception\TaskException;
 use Event\App\Mapper\TaskMapperInterface;
 use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\InputFilter\InputFilter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -20,7 +22,7 @@ class PostTaskHandler implements RequestHandlerInterface
 
     /**
      * PostTaskHandler constructor.
-     * @param TaskMapperInterface $mapper
+     * @param TaskMapperInterface           $mapper
      */
     public function __construct(TaskMapperInterface $mapper)
     {
@@ -30,12 +32,25 @@ class PostTaskHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $body = $request->getParsedBody();
-//        $identity = $request->getAttribute(Identity::class);
-        $entity = (new Task)
-            ->setName($body['name'])
-            ->setDescription($body['description']);
-        $this->mapper->create($entity);
+
+        $inputFilter = new InputFilter();
+        $inputFilter->add(Task::validationName());
+        $inputFilter->add(Task::validationDescription());
+        $inputFilter->setData($body);
+
+        if (! $inputFilter->isValid()) {
+            throw TaskException::validation($inputFilter->getMessages());
+        }
+
+        try {
+            $entity = (new Task)
+                ->setName($body['name'])
+                ->setDescription($body['description']);
+            $this->mapper->create($entity);
+        } catch (\PDOException $err) {
+            throw TaskException::storageError($err->getMessage());
+        }
+
         return new EmptyResponse();
     }
-
 }

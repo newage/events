@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Event\App\Entity;
 
+use Laminas\InputFilter\Input;
+use Laminas\Validator;
+
 final class Task
 {
     private $id;
@@ -81,5 +84,22 @@ final class Task
     {
         $this->dtCreated = $dtCreated;
         return $this;
+    }
+
+    public static function validationName(): Input
+    {
+        $input = new Input('name');
+        $input->getValidatorChain()
+            ->attach(new Validator\NotEmpty())
+            ->attach(new Validator\StringLength(['min'=>1,'max'=>15]));
+        return $input;
+    }
+
+    public static function validationDescription(): Input
+    {
+        $input = new Input('description');
+        $input->getValidatorChain()
+            ->attach(new Validator\StringLength(['min'=>5,'max'=>255]));
+        return $input;
     }
 }

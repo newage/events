@@ -36,8 +36,8 @@ class AuthorizationMiddleware implements MiddlewareInterface
         $identity = new Identity();
 
         /* get JWT from headers */
-        if (isset($authorization[0]) && substr($authorization[0], 0, 6) == 'Bearer') {
-            try {
+        try {
+            if (isset($authorization[0]) && substr($authorization[0], 0, 6) == 'Bearer') {
                 /* get JWT */
                 $tokenString = substr($authorization[0], 7);
                 /* validate&parse JWT */
@@ -49,13 +49,13 @@ class AuthorizationMiddleware implements MiddlewareInterface
                     ->setUserId($token->getClaim('uid'))
                     ->setRole($token->getClaim('role'));
                 $request = $request->withAttribute(Identity::class, $identity);
-                return $handler->handle($request);
-            } catch (\Exception $e) {
-                throw new InvalidTokenException($e->getMessage());
+            } else {
+                throw InvalidTokenException::notExistHeader();
             }
-        } else {
-            throw new InvalidTokenException('Not valid jwt');
+        } catch (\RuntimeException $err) {
+            throw InvalidTokenException::unknown($err->getMessage());
         }
+        return $handler->handle($request);
     }
 
     protected function getValidationValues(): ?ValidationData
