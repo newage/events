@@ -36,6 +36,7 @@ class ConfigProvider
             'factories'  => [
                 Mapper\TaskMapperInterface::class => Factory\PdoTasksMapperFactory::class,
                 Handler\PostTaskHandler::class => Factory\PostTaskHandlerFactory::class,
+                Handler\PatchTaskHandler::class => Factory\PatchTaskHandlerFactory::class,
                 Handler\GetTaskHandler::class => Factory\GetTaskHandlerFactory::class,
                 Handler\GetTasksHandler::class => Factory\GetTasksHandlerFactory::class,
                 Handler\DeleteTaskHandler::class => Factory\DeleteTaskHandlerFactory::class,

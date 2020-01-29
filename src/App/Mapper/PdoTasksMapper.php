@@ -66,12 +66,20 @@ class PdoTasksMapper implements TaskMapperInterface
         return $entity;
     }
 
+    public function update(Task $entity, int $id): bool
+    {
+        $statement = $this->pdo->prepare('UPDATE `tasks` SET name=:name, description=:description WHERE id=:id');
+        $statement->bindParam('name', $entity->getName());
+        if (!empty($entity->getDescription())) {
+            $statement->bindParam('description', $entity->getDescription());
+        }
+        $statement->bindParam('id', $id);
+        return $statement->execute();
+    }
+
     public function delete(int $id): bool
     {
         $statement = $this->pdo->prepare('DELETE FROM `tasks` WHERE id = :id');
-        if (!$statement->execute([':id' => $id])) {
-            return false;
-        }
-        return true;
+        return $statement->execute([':id' => $id]);
     }
 }

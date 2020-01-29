@@ -35,9 +35,9 @@ use Psr\Container\ContainerInterface;
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
     $app->get('/metrics[/]', Event\Common\Handler\MetricsHandler::class, 'metrics');
     /* Task entity */
-    $app->get('/task/{id:[0-9]}[/]', Event\App\Handler\GetTaskHandler::class, 'get.task');
+    $app->get('/task/{id:[0-9]+}[/]', Event\App\Handler\GetTaskHandler::class, 'get.task');
     $app->get('/tasks[/]', Event\App\Handler\GetTasksHandler::class, 'get.tasks');
-    $app->delete('/task/{id}[/]', Event\App\Handler\DeleteTaskHandler::class, 'delete.task');
+    $app->delete('/task/{id:[0-9]+}[/]', Event\App\Handler\DeleteTaskHandler::class, 'delete.task');
     $app->post(
         '/task[/]',
         [
@@ -45,5 +45,13 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
             Event\App\Handler\PostTaskHandler::class
         ],
         'post.task'
+    );
+    $app->patch(
+        '/task/{id:[0-9]+}[/]',
+        [
+            Mezzio\Helper\BodyParams\BodyParamsMiddleware::class,
+            Event\App\Handler\PatchTaskHandler::class
+        ],
+        'patch.task'
     );
 };
