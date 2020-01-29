@@ -26,33 +26,32 @@ class PdoTasksMapper implements TaskMapperInterface
         $this->pdo = $pdo;
     }
 
-    public function fetch($id): ?Task
+    public function fetch(int $id): ?Task
     {
         $hydrator = new ClassMethodsHydrator();
 
-        $select = $this->pdo->prepare('SELECT * from tasks WHERE id = :id');
-        if (!$select->execute([':id' => $id])) {
+        $statement = $this->pdo->prepare('SELECT * FROM tasks WHERE id = :id');
+        if (!$statement->execute([':id' => $id])) {
             return null;
         }
 
-        $post = $select->fetch(\PDO::FETCH_ASSOC);
+        $post = $statement->fetch(\PDO::FETCH_ASSOC);
         return $post ? $hydrator->hydrate((array) $post, new Task()) : null;
     }
 
     public function fetchAll(): TaskCollection
     {
         $hydrator = new ClassMethodsHydrator();
-        $select = $this->pdo->prepare('SELECT * from tasks');
-        if (!$select->execute()) {
+        $statement = $this->pdo->prepare('SELECT * FROM tasks');
+        if (!$statement->execute()) {
             throw new NotFoundException('Wrong execution!');
         }
 
         $posts = [];
-        foreach ($select->fetchAll(\PDO::FETCH_ASSOC) as $row) {
+        foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $row) {
             $posts[] = $hydrator->hydrate((array) $row, new Task());
         }
-        $collection = new TaskCollection(new ArrayAdapter($posts));
-        return $collection;
+        return new TaskCollection(new ArrayAdapter($posts));
     }
 
     public function create(Task $entity): ?Task
@@ -65,5 +64,14 @@ class PdoTasksMapper implements TaskMapperInterface
         }
         $entity = $entity->setId($this->pdo->lastInsertId());
         return $entity;
+    }
+
+    public function delete(int $id): bool
+    {
+        $statement = $this->pdo->prepare('DELETE FROM `tasks` WHERE id = :id');
+        if (!$statement->execute([':id' => $id])) {
+            return false;
+        }
+        return true;
     }
 }

@@ -32,10 +32,46 @@ class TaskException extends \RuntimeException implements ProblemDetailsException
     public static function storageError($message) : self
     {
         $e = new self();
-        $e->status = StatusCodeInterface::STATUS_CONFLICT  ;
+        $e->status = StatusCodeInterface::STATUS_CONFLICT;
         $e->type   = self::TYPE;
         $e->title  = 'Storage error';
         $e->detail = $message;
+        $e->additional = [];
+
+        return $e;
+    }
+
+    public static function wrongId() : self
+    {
+        $e = new self();
+        $e->status = StatusCodeInterface::STATUS_BAD_REQUEST;
+        $e->type   = self::TYPE;
+        $e->title  = 'Bad request';
+        $e->detail = 'Wrong ID parameter in request';
+        $e->additional = [];
+
+        return $e;
+    }
+
+    public static function notFound() : self
+    {
+        $e = new self();
+        $e->status = StatusCodeInterface::STATUS_NOT_FOUND;
+        $e->type   = self::TYPE;
+        $e->title  = 'Not found';
+        $e->detail = 'Not found entity `task` in the storage';
+        $e->additional = [];
+
+        return $e;
+    }
+
+    public static function notDelete() : self
+    {
+        $e = new self();
+        $e->status = StatusCodeInterface::STATUS_NOT_FOUND;
+        $e->type   = self::TYPE;
+        $e->title  = 'Not Found';
+        $e->detail = 'Entity `task` does not found in the storage';
         $e->additional = [];
 
         return $e;

@@ -32,15 +32,13 @@ class ConfigProvider
     {
         return [
             'invokables' => [
-                Handler\PingHandler::class => Handler\PingHandler::class,
             ],
             'factories'  => [
-                Handler\HomePageHandler::class => Factory\HomePageHandlerFactory::class,
-                Handler\MetricsHandler::class => Factory\MetricsHandlerFactory::class,
                 Mapper\TaskMapperInterface::class => Factory\PdoTasksMapperFactory::class,
                 Handler\PostTaskHandler::class => Factory\PostTaskHandlerFactory::class,
                 Handler\GetTaskHandler::class => Factory\GetTaskHandlerFactory::class,
                 Handler\GetTasksHandler::class => Factory\GetTasksHandlerFactory::class,
+                Handler\DeleteTaskHandler::class => Factory\DeleteTaskHandlerFactory::class,
             ],
         ];
     }

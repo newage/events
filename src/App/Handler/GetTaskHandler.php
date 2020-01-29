@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Event\App\Handler;
 
+use Event\App\Exception\TaskException;
 use Event\App\Mapper\TaskMapperInterface;
 use Mezzio\Hal\HalResponseFactory;
 use Mezzio\Hal\ResourceGenerator;
@@ -37,8 +38,11 @@ class GetTaskHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $id = $request->getAttribute('id', false);
-        $task = $this->mapper->fetch($id);
+        $id = $request->getAttribute('id');
+        $task = $this->mapper->fetch((int) $id);
+        if (!$task) {
+            throw TaskException::notFound();
+        }
 
         $resource = $this->resourceGenerator->fromObject($task, $request);
         return $this->responseFactory->createResponse($request, $resource);

@@ -37,6 +37,7 @@ class ConfigProvider
             'factories'  => [
                 Container\ConfigInterface::class => Factory\ConfigFactory::class,
                 Middleware\AuthorizationMiddleware::class => Factory\AuthorizationMiddlewareFactory::class,
+                Handler\MetricsHandler::class => Factory\MetricsHandlerFactory::class,
             ],
         ];
     }
